@@ -18,6 +18,7 @@ namespace HangfireWorkerService
             Host.CreateDefaultBuilder(args)
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddSingleton<IJobRepository, JobRepository>();
                     services.AddHostedService<Worker>();
                 });
     }
