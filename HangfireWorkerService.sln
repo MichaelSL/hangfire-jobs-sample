@@ -9,12 +9,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireWorkerService.Share
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangfireWorkerService.SampleJobs", "HangfireWorkerService.SampleJobs\HangfireWorkerService.SampleJobs.csproj", "{B57F88E5-CC2B-46F1-A150-1A55E3DEB6ED}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{A0B1AE70-96A9-4156-920B-13947DA390B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A0B1AE70-96A9-4156-920B-13947DA390B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0B1AE70-96A9-4156-920B-13947DA390B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE9A7835-5ACB-4CF2-A074-E1E7FDCB968C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE9A7835-5ACB-4CF2-A074-E1E7FDCB968C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EE9A7835-5ACB-4CF2-A074-E1E7FDCB968C}.Release|Any CPU.ActiveCfg = Release|Any CPU
