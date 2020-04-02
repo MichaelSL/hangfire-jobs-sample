@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Hangfire;
 using Hangfire.Server;
-using Microsoft.Extensions.Configuration;
 
 namespace HangfireWorkerService.Jobs
 {
