@@ -27,6 +27,7 @@ class Build : NukeBuild
     public static int Main () => Execute<Build>(x => x.Compile);
 
     private const string SharedProjectName = "HangfireWorkerService.Shared";
+    private const string SampleJobsProjectName = "HangfireWorkerService.SampleJobs";
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
@@ -77,6 +78,17 @@ class Build : NukeBuild
                 .SetOutputDirectory(ArtifactsDirectory / "nuget"));
         });
 
+    Target PackSampleJobs => _ => _
+        .DependsOn(Compile)
+        .Requires(() => BuildVersion)
+        .Executes(() =>
+        {
+            DotNetPack(c => c
+                .SetProject(Solution.GetProject(SampleJobsProjectName).Path)
+                .SetVersion(BuildVersion)
+                .SetOutputDirectory(ArtifactsDirectory / "nuget"));
+        });
+
     Target PushSharedNuGet => _ => _
         .DependsOn(PackSharedNuGet)
         .Requires(() => BuildVersion)
@@ -89,4 +101,21 @@ class Build : NukeBuild
                 .SetSource(NuGetServerUrl)
                 .SetTargetPath(ArtifactsDirectory / "nuget" / $"{SharedProjectName}.{BuildVersion}.nupkg"));
         });
+
+    Target PushSampleJobsNuGet => _ => _
+        .DependsOn(PackSampleJobs)
+        .Requires(() => BuildVersion)
+        .Requires(() => NuGetApiKey)
+        .Requires(() => NuGetServerUrl)
+        .Executes(() =>
+        {
+            NuGetTasks.NuGetPush(c => c
+                .SetApiKey(NuGetApiKey)
+                .SetSource(NuGetServerUrl)
+                .SetTargetPath(ArtifactsDirectory / "nuget" / $"{SampleJobsProjectName}.{BuildVersion}.nupkg"));
+        });
+
+    Target PushAllNugets => _ => _
+        .DependsOn(PushSharedNuGet, PushSampleJobsNuGet)
+        .Executes(() => { });
 }
